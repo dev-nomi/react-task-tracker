@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify';
 
-const AddTask = ({ onAdd }) => {
+const AddTask = ({ onAdd, onCloseAdd }) => {
   const [text, setText] = useState('')
   const [day, setDay] = useState('')
   const [reminder, setReminder] = useState(false)
@@ -8,11 +9,16 @@ const AddTask = ({ onAdd }) => {
   const onSubmit = (e) => {
     e.preventDefault()
 
+    if(!text){
+      toast.error("Oops! Task title can't blank.");
+      return
+    }
     onAdd({ text, day, reminder })
 
     setText('')
     setDay('')
     setReminder(false)
+    onCloseAdd()
   }
 
   return(
